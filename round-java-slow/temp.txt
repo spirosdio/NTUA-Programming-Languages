@@ -1,0 +1,88 @@
+
+            for (int i = 0; i < cars; i++) {
+                    int capacity = cities;
+                    int location = locations.get(i);
+                    int target = 0;
+
+                    if (target + 1 > location) {
+                        temporary_dist.add(target - location);
+                    } else {
+                        temporary_dist.add(target + capacity - location);
+                    }
+                }
+//////////
+
+
+
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class round {
+    // The main function.
+    public static void main(String args[]) {
+        final long startTime = System.currentTimeMillis();
+        try {
+
+            List<Integer> locations = new ArrayList<Integer>();
+
+            BufferedReader in = new BufferedReader(new FileReader(args[0]));
+            String line1 = in.readLine();
+
+            String line2 = in.readLine();
+            in.close();
+
+            String[] words2 = line2.split(" ");// splits the string based on whitespace
+            String[] words1 = line1.split(" ");// splits the string based on whitespace
+
+            int capacity = Integer.parseInt(words1[0]);
+            int cars = Integer.parseInt(words1[1]);
+
+            for (String w : words2) {
+                int number = Integer.parseInt(w);
+                locations.add(number);
+            }
+
+            Integer max = 0, sum = 0, ulti_sum = Integer.MAX_VALUE, ulti_cit = 9, temp, location, temp2;
+
+            for (int target = 0; target < capacity; target++) {
+
+                for (int i = 0; i < cars; i++) {
+                    location = locations.get(i);
+
+                    temp2 = target - location;
+
+                    if (temp2 + 1 > 0) {
+                        temp = temp2;
+                    } else {
+                        temp = (temp2 + capacity);
+                    }
+                    sum = temp + sum;
+                    max = Integer.max(temp, max);
+
+                }
+
+                if (sum - max >= max - 1 && sum < ulti_sum) {
+                    ulti_sum = sum;
+                    ulti_cit = target;
+                }
+
+                max = 0;
+                sum = 0;
+            }
+
+            System.out.print(ulti_sum);
+            System.out.print(" ");
+            System.out.println(ulti_cit);
+
+            long endTime = System.currentTimeMillis();
+            System.out.println("\nTotal execution time: " + (endTime - startTime));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
